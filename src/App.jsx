@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, React } from "react";
 import { useReveal, useParallax, useMouseFollow } from "./hooks";
 import {
   KAKAO_LINK,
@@ -27,6 +27,7 @@ import GalleryItem from "./components/GalleryItem";
 import MilestoneItem from "./components/MilestoneItem";
 import ProgramCard from "./components/ProgramCard";
 import "./styles.css";
+import instructorImg from "./assets/instructor.jpg";
 
 /* ── Gallery Carousel ── */
 function GalleryCarousel({ gallRef, gallVis }) {
@@ -53,8 +54,14 @@ function GalleryCarousel({ gallRef, gallVis }) {
     autoRef.current = setInterval(() => go(1), 4500);
   };
 
-  const handlePrev = () => { go(-1); resetAuto(); };
-  const handleNext = () => { go(1); resetAuto(); };
+  const handlePrev = () => {
+    go(-1);
+    resetAuto();
+  };
+  const handleNext = () => {
+    go(1);
+    resetAuto();
+  };
 
   // 터치/드래그
   const onDown = (e) => {
@@ -137,7 +144,10 @@ function GalleryCarousel({ gallRef, gallVis }) {
           <button
             key={i}
             className={`carousel-dot${i === cur ? " active" : ""}`}
-            onClick={() => { setCur(i); resetAuto(); }}
+            onClick={() => {
+              setCur(i);
+              resetAuto();
+            }}
             aria-label={`${i + 1}번째 사진`}
           />
         ))}
@@ -260,22 +270,44 @@ export default function SeorinLanding() {
             <h1 className="hero-title">
               <span className="hero-line hero-line--cream">
                 {"아이의".split("").map((c, i) => (
-                  <span key={`a${i}`} className={`hero-char${loaded}`} style={{ "--i": 12 + i }}>{c}</span>
+                  <span
+                    key={`a${i}`}
+                    className={`hero-char${loaded}`}
+                    style={{ "--i": 12 + i }}
+                  >
+                    {c}
+                  </span>
                 ))}
               </span>
               <span className="hero-line hero-line--cream">
                 {"마음에".split("").map((c, i) => (
-                  <span key={`b${i}`} className={`hero-char${loaded}`} style={{ "--i": 16 + i }}>{c}</span>
+                  <span
+                    key={`b${i}`}
+                    className={`hero-char${loaded}`}
+                    style={{ "--i": 16 + i }}
+                  >
+                    {c}
+                  </span>
                 ))}
               </span>
               <span className="hero-line hero-line--gold">
                 {"민요".split("").map((c, i) => (
-                  <span key={`c${i}`} className={`hero-char${loaded}`} style={{ "--i": 22 + i }}>{c}</span>
+                  <span
+                    key={`c${i}`}
+                    className={`hero-char${loaded}`}
+                    style={{ "--i": 22 + i }}
+                  >
+                    {c}
+                  </span>
                 ))}
               </span>
               <span className="hero-line hero-line--gold">
                 {"한 소절".split("").map((c, i) => (
-                  <span key={`d${i}`} className={`hero-char${loaded}`} style={{ "--i": 26 + i }}>
+                  <span
+                    key={`d${i}`}
+                    className={`hero-char${loaded}`}
+                    style={{ "--i": 26 + i }}
+                  >
                     {c === " " ? "\u00A0" : c}
                   </span>
                 ))}
@@ -313,8 +345,16 @@ export default function SeorinLanding() {
       </section>
 
       {/* 먹 번짐 디바이더: 히어로 → 크레덴셜 */}
-      <svg className="ink-divider" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0,0 C240,55 480,20 720,45 C960,70 1200,15 1440,0 L1440,60 L0,60Z" fill="var(--hanji)" />
+      <svg
+        className="ink-divider"
+        viewBox="0 0 1440 60"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M0,0 C240,55 480,20 720,45 C960,70 1200,15 1440,0 L1440,60 L0,60Z"
+          fill="var(--hanji)"
+        />
       </svg>
 
       {/* ═══ CREDENTIALS ═══ */}
@@ -327,7 +367,11 @@ export default function SeorinLanding() {
               style={{ "--delay": `${i * 0.12}s` }}
             >
               <div className="credential-num">
-                <AnimCounter end={c.num} suffix={c.suffix} triggered={credVis} />
+                <AnimCounter
+                  end={c.num}
+                  suffix={c.suffix}
+                  triggered={credVis}
+                />
               </div>
               <div className="credential-title">{c.title}</div>
               <div className="credential-desc">{c.desc}</div>
@@ -337,29 +381,34 @@ export default function SeorinLanding() {
       </section>
 
       {/* 먹 번짐 디바이더: 크레덴셜 → 강사 */}
-      <svg className="ink-divider ink-divider--flip" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0,0 C360,50 720,10 1080,40 C1260,55 1380,20 1440,0 L1440,60 L0,60Z" fill="var(--ink)" />
+      <svg
+        className="ink-divider ink-divider--flip"
+        viewBox="0 0 1440 60"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M0,0 C360,50 720,10 1080,40 C1260,55 1380,20 1440,0 L1440,60 L0,60Z"
+          fill="var(--ink)"
+        />
       </svg>
 
       {/* ═══ INSTRUCTOR ═══ */}
       <section ref={instrRef} className="instructor">
         <div ref={parRef} className="instructor-inner">
-          <div
-            className={`instructor-header${instrVis ? " visible" : ""}`}
-          >
+          <div className={`instructor-header${instrVis ? " visible" : ""}`}>
             <span className="section-label">Instructor</span>
             <h2 className="section-title">서린을 이끄는 사람</h2>
             <div className="section-divider" />
           </div>
 
           <div className="profile-row">
-            <div
-              className={`profile-photo-wrap${instrVis ? " visible" : ""}`}
-            >
-              <div className="profile-photo" aria-label="김효슬 프로필 사진">
-                &#9835;
-              </div>
-              <p className="profile-photo-note">* 프로필 사진 교체 예정</p>
+            <div className={`profile-photo-wrap${instrVis ? " visible" : ""}`}>
+              <img
+                src={instructorImg}
+                alt="김효슬 프로필 사진"
+                className="profile-photo"
+              />
             </div>
 
             <div className={`profile-info${instrVis ? " visible" : ""}`}>
@@ -381,7 +430,9 @@ export default function SeorinLanding() {
               </div>
 
               <blockquote className="profile-quote">
-                <span className="profile-quote-mark" aria-hidden="true">"</span>
+                <span className="profile-quote-mark" aria-hidden="true">
+                  "
+                </span>
                 민요는 단순한 노래가 아니라
                 <br />
                 아이에게 감정을 표현하는 방법을
@@ -429,8 +480,16 @@ export default function SeorinLanding() {
       </section>
 
       {/* 먹 번짐 디바이더: 강사 → 프로그램 */}
-      <svg className="ink-divider" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0,0 C180,50 540,15 900,40 C1140,55 1320,20 1440,0 L1440,60 L0,60Z" fill="var(--hanji)" />
+      <svg
+        className="ink-divider"
+        viewBox="0 0 1440 60"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M0,0 C180,50 540,15 900,40 C1140,55 1320,20 1440,0 L1440,60 L0,60Z"
+          fill="var(--hanji)"
+        />
       </svg>
 
       {/* ═══ PROGRAMS ═══ */}
@@ -491,9 +550,7 @@ export default function SeorinLanding() {
       {/* ═══ FAQ ═══ */}
       <section ref={faqRef} id="faq" className="faq-section has-texture">
         <div className="faq-inner">
-          <div
-            className={`faq-header reveal-up${faqVis ? " visible" : ""}`}
-          >
+          <div className={`faq-header reveal-up${faqVis ? " visible" : ""}`}>
             <span className="section-label">FAQ</span>
             <h2 className="section-title section-title--md">자주 묻는 질문</h2>
             <div className="section-divider" />
@@ -505,9 +562,7 @@ export default function SeorinLanding() {
               ))}
             </div>
             <div className="faq-sidebar">
-              <div
-                className={`faq-sidebar-reveal${faqVis ? " visible" : ""}`}
-              >
+              <div className={`faq-sidebar-reveal${faqVis ? " visible" : ""}`}>
                 <div className="faq-contact">
                   <div className="faq-contact-icon" aria-hidden="true">
                     &#x1F4DE;
@@ -540,9 +595,7 @@ export default function SeorinLanding() {
           <div className="footer-top">
             <div className={`footer-brand${footVis ? " visible" : ""}`}>
               <div className="footer-logo">서린</div>
-              <div className="footer-tagline">
-                Seorin · 민요 교육 플랫폼
-              </div>
+              <div className="footer-tagline">Seorin · 민요 교육 플랫폼</div>
             </div>
             <div className={`footer-links${footVis ? " visible" : ""}`}>
               {[
