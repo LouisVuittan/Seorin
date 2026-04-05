@@ -10,7 +10,7 @@ const GalleryItem = ({ g, idx }) => {
       }}
     >
       <div className="gallery-card-bg" aria-hidden="true">
-        <span className="gallery-card-emoji">{g.emoji}</span>
+        <img src={g.image} alt={g.label} className="gallery-card-img" />
       </div>
       <div className="gallery-card-glass">
         <span className="gallery-card-category">{g.category}</span>

@@ -1,3 +1,9 @@
+import smile from "./assets/smile.png";
+import hanbok from "./assets/hanbok.png";
+import lesson from "./assets/lesson.png";
+import stage_setup from "./assets/stage_setup.png";
+import onstage from "./assets/onstage.png";
+
 export const navItems = [
   { label: "서린 소개", id: "about" },
   { label: "수업 안내", id: "programs" },
@@ -75,10 +81,7 @@ export const careerCards = [
   {
     emoji: "\uD83C\uDF0F",
     title: "해외 공연",
-    items: [
-      "카네기홀 소리극 '스크랜튼'",
-      "영국 에든버러 프린지 페스티벌",
-    ],
+    items: ["카네기홀 소리극 '스크랜튼'", "영국 에든버러 프린지 페스티벌"],
   },
   {
     emoji: "\uD83C\uDFAD",
@@ -125,10 +128,9 @@ export const instructorTags = [
 ];
 
 export const galleryItems = [
-  { label: "민요 수업 현장", category: "수업", emoji: "\u266A" },
-  { label: "또랑단 합창 연습", category: "합창", emoji: "\uD83C\uDFB6" },
-  { label: "전통 의상 체험", category: "체험", emoji: "\uD83C\uDFAD" },
-  { label: "공연 무대 뒤에서", category: "공연", emoji: "\u2728" },
-  { label: "아이들의 웃음", category: "일상", emoji: "\uD83C\uDF3F" },
-  { label: "함께 만드는 무대", category: "공연", emoji: "\uD83C\uDFA4" },
+  { label: "민요 수업 현장", category: "수업", image: lesson },
+  { label: "또랑단 합창 연습", category: "합창", image: onstage },
+  { label: "전통 의상 체험", category: "체험", image: hanbok },
+  { label: "공연 무대 뒤에서", category: "공연", image: stage_setup },
+  { label: "아이들의 웃음", category: "일상", image: smile },
 ];
