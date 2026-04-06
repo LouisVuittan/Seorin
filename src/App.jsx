@@ -1,5 +1,11 @@
 import { useState, useEffect, useRef, useCallback, React } from "react";
-import { useReveal, useParallax, useMouseFollow } from "./hooks";
+import {
+  useReveal,
+  useParallax,
+  useMouseFollow,
+  useHeroFade,
+  useScrollProgress,
+} from "./hooks";
 import {
   KAKAO_LINK,
   PHONE_NUMBER,
@@ -19,7 +25,13 @@ import {
   careerCards,
   galleryItems,
 } from "./data";
-import { KakaoIcon, MenuIcon, CloseIcon, KakaoLarge, PhoneIcon } from "./components/Icons";
+import {
+  KakaoIcon,
+  MenuIcon,
+  CloseIcon,
+  KakaoLarge,
+  PhoneIcon,
+} from "./components/Icons";
 import AnimCounter from "./components/AnimCounter";
 import FaqItem from "./components/FaqItem";
 import RevealHeader from "./components/RevealHeader";
@@ -28,6 +40,29 @@ import MilestoneItem from "./components/MilestoneItem";
 import ProgramCard from "./components/ProgramCard";
 import "./styles.css";
 import instructorImg from "./assets/instructor.jpg";
+
+/* ── Ink Divider with scroll progress ── */
+function InkDivider({ flip, fillColor, bgColor }) {
+  const spRef = useScrollProgress("--ink-sp", { start: 1, end: 0.6 });
+
+  // 각 디바이더마다 다른 path를 씀
+  const pathD = flip
+    ? "M0,0 C360,50 720,10 1080,40 C1260,55 1380,20 1440,0 L1440,60 L0,60Z"
+    : "M0,0 C240,55 480,20 720,45 C960,70 1200,15 1440,0 L1440,60 L0,60Z";
+
+  return (
+    <svg
+      ref={spRef}
+      className={`ink-divider${flip ? " ink-divider--flip" : ""}`}
+      viewBox="0 0 1440 60"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      style={{ background: bgColor }}
+    >
+      <path d={pathD} fill={fillColor} className="ink-divider-path" />
+    </svg>
+  );
+}
 
 /* ── Gallery Carousel ── */
 function GalleryCarousel({ gallRef, gallVis }) {
@@ -43,7 +78,6 @@ function GalleryCarousel({ gallRef, gallVis }) {
     [total],
   );
 
-  // 자동 슬라이드
   useEffect(() => {
     autoRef.current = setInterval(() => go(1), 4500);
     return () => clearInterval(autoRef.current);
@@ -63,7 +97,6 @@ function GalleryCarousel({ gallRef, gallVis }) {
     resetAuto();
   };
 
-  // 터치/드래그
   const onDown = (e) => {
     setDragging(true);
     startX.current = e.touches ? e.touches[0].clientX : e.clientX;
@@ -165,6 +198,12 @@ export default function SeorinLanding() {
   const heroRef = useRef(null);
   useMouseFollow(heroRef);
 
+  // ── 스크롤 연동: 히어로 fade-out ──
+  const heroFadeRef = useHeroFade();
+
+  // ── 스크롤 연동: 크레덴셜 섹션 ──
+  const credSpRef = useScrollProgress("--cred-sp", { start: 1, end: 0.4 });
+
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", h, { passive: true });
@@ -262,7 +301,8 @@ export default function SeorinLanding() {
         <div className="hero-orb hero-orb--2" />
         <div className="hero-grain" />
 
-        <div className="hero-layout">
+        {/* 히어로 콘텐츠: 스크롤 시 fade-out + 위로 이동 */}
+        <div className="hero-layout" ref={heroFadeRef}>
           <div className="hero-content">
             <div className={`hero-overline${loaded}`}>
               <span className="hero-badge">어린이 민요 교육</span>
@@ -345,21 +385,11 @@ export default function SeorinLanding() {
       </section>
 
       {/* 먹 번짐 디바이더: 히어로 → 크레덴셜 */}
-      <svg
-        className="ink-divider"
-        viewBox="0 0 1440 60"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M0,0 C240,55 480,20 720,45 C960,70 1200,15 1440,0 L1440,60 L0,60Z"
-          fill="var(--hanji)"
-        />
-      </svg>
+      <InkDivider fillColor="var(--hanji)" bgColor="var(--ink)" />
 
       {/* ═══ CREDENTIALS ═══ */}
       <section ref={credRef} id="about" className="credentials has-texture">
-        <div className="credentials-grid">
+        <div className="credentials-grid" ref={credSpRef}>
           {credentials.map((c, i) => (
             <div
               key={i}
@@ -380,18 +410,6 @@ export default function SeorinLanding() {
         </div>
       </section>
 
-      {/* 먹 번짐 디바이더: 크레덴셜 → 강사 */}
-      <svg
-        className="ink-divider ink-divider--flip"
-        viewBox="0 0 1440 60"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M0,0 C360,50 720,10 1080,40 C1260,55 1380,20 1440,0 L1440,60 L0,60Z"
-          fill="var(--ink)"
-        />
-      </svg>
 
       {/* ═══ INSTRUCTOR ═══ */}
       <section ref={instrRef} className="instructor">
@@ -399,6 +417,19 @@ export default function SeorinLanding() {
           <div className={`instructor-header${instrVis ? " visible" : ""}`}>
             <span className="section-label">Instructor</span>
             <h2 className="section-title">서린을 이끄는 사람</h2>
+            {/* 붓 터치 장식: stroke-dashoffset 애니메이션 */}
+            <svg
+              className="brush-stroke"
+              width="120"
+              height="12"
+              viewBox="0 0 120 12"
+              aria-hidden="true"
+            >
+              <path
+                className="brush-stroke-path"
+                d="M2 8 C20 2, 40 10, 60 6 S100 2, 118 7"
+              />
+            </svg>
             <div className="section-divider" />
           </div>
 
@@ -467,7 +498,7 @@ export default function SeorinLanding() {
             </div>
           </div>
 
-          {/* ── Timeline (세로 라인) ── */}
+          {/* ── Timeline (세로 라인) — 스크롤 연동 채우기 ── */}
           <div className={`timeline-wrap${instrVis ? " visible" : ""}`}>
             <h4 className="timeline-title">경력 타임라인</h4>
             <div className="timeline-line">
@@ -480,17 +511,7 @@ export default function SeorinLanding() {
       </section>
 
       {/* 먹 번짐 디바이더: 강사 → 프로그램 */}
-      <svg
-        className="ink-divider"
-        viewBox="0 0 1440 60"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M0,0 C180,50 540,15 900,40 C1140,55 1320,20 1440,0 L1440,60 L0,60Z"
-          fill="var(--hanji)"
-        />
-      </svg>
+      <InkDivider fillColor="var(--hanji)" bgColor="var(--ink)" />
 
       {/* ═══ PROGRAMS ═══ */}
       <section id="programs" className="programs has-texture">
