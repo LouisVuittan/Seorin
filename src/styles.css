@@ -1614,7 +1614,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   gap: 40px;
   flex-wrap: wrap;
 }
@@ -1645,57 +1645,29 @@ body {
   .programs-header-split {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0px;
+    margin-bottom: 0px;
   }
   .programs-title-right {
     text-align: left;
   }
   .programs-grid-asym {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
   }
   .programs-grid-asym .program-card:first-child {
-    grid-column: 1 / -1;
-    grid-row: 1;
+    grid-row: auto;
   }
-  /* 아래 두 카드: 정사각형 느낌으로 컴팩트하게 */
-  .programs-grid-asym .program-card:not(:first-child) {
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
+  .program-card {
+    padding: 32px 24px 28px;
   }
-  .programs-grid-asym .program-card:not(:first-child) .program-num {
-    font-size: 11px;
-    margin-bottom: 10px;
-  }
-  .programs-grid-asym .program-card:not(:first-child) .program-title {
-    font-size: 17px;
-    margin-bottom: 4px;
-  }
-  .programs-grid-asym .program-card:not(:first-child) .program-sub {
-    font-size: 10px;
-    margin-bottom: 12px;
-  }
-  .programs-grid-asym .program-card:not(:first-child) .program-sub::after {
-    width: 20px;
-    margin-top: 10px;
-  }
-  .programs-grid-asym .program-card:not(:first-child) .program-desc {
-    font-size: 11px;
-    line-height: 1.7;
-    margin-bottom: 14px;
-  }
-  .programs-grid-asym .program-card:not(:first-child) .program-cta {
-    font-size: 11px;
-    margin-top: auto;
-  }
-  /* 첫 카드(또랑단): 풀 너비, 기존 분위기 유지하되 모바일 사이즈 */
-  .programs-grid-asym .program-card:first-child {
-    padding: 36px 28px 32px;
+  .program-title {
+    font-size: 22px;
   }
   .programs-grid-asym .program-card:first-child .program-title {
-    font-size: 28px;
+    font-size: 26px;
   }
-  .programs-grid-asym .program-card:first-child .program-desc {
+  .program-desc {
     font-size: 13px;
   }
 }
@@ -1704,24 +1676,14 @@ body {
   .programs {
     padding: 48px 16px;
   }
-  .programs-grid-asym .program-card:not(:first-child) {
-    padding: 18px 12px;
+  .program-card {
+    padding: 28px 20px 24px;
   }
-  .programs-grid-asym .program-card:not(:first-child) .program-title {
-    font-size: 15px;
-  }
-  .programs-grid-asym .program-card:not(:first-child) .program-desc {
-    font-size: 10.5px;
-    margin-bottom: 10px;
-  }
-  .programs-grid-asym .program-card:first-child {
-    padding: 30px 22px 26px;
+  .program-title {
+    font-size: 20px;
   }
   .programs-grid-asym .program-card:first-child .program-title {
-    font-size: 24px;
-  }
-  .programs-grid-asym .program-card:first-child .program-desc {
-    font-size: 12.5px;
+    font-size: 22px;
   }
 }
 
@@ -1732,7 +1694,7 @@ body {
   transition: all 0.8s var(--ease);
   transition-delay: var(--delay, 0s);
   background: var(--hanji);
-  padding: 48px 40px 40px;
+  padding: 32px 40px 40px;
   position: relative;
   cursor: default;
 }
@@ -1753,7 +1715,7 @@ body {
   font-weight: 400;
   color: var(--accent);
   opacity: 0.5;
-  margin-bottom: 28px;
+  margin-bottom: 18px;
   letter-spacing: 1px;
 }
 
