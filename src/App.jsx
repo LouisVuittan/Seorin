@@ -19,7 +19,7 @@ import {
   careerCards,
   galleryItems,
 } from "./data";
-import { KakaoIcon, MenuIcon, CloseIcon, KakaoLarge } from "./components/Icons";
+import { KakaoIcon, MenuIcon, CloseIcon, KakaoLarge, PhoneIcon } from "./components/Icons";
 import AnimCounter from "./components/AnimCounter";
 import FaqItem from "./components/FaqItem";
 import RevealHeader from "./components/RevealHeader";
@@ -553,6 +553,7 @@ export default function SeorinLanding() {
           <div className={`faq-header reveal-up${faqVis ? " visible" : ""}`}>
             <span className="section-label">FAQ</span>
             <h2 className="section-title section-title--md">자주 묻는 질문</h2>
+            <p className="faq-subtitle">서린에 대해 궁금한 점을 모았습니다</p>
             <div className="section-divider" />
           </div>
           <div className="faq-layout">
@@ -564,16 +565,19 @@ export default function SeorinLanding() {
             <div className="faq-sidebar">
               <div className={`faq-sidebar-reveal${faqVis ? " visible" : ""}`}>
                 <div className="faq-contact">
+                  <div className="faq-contact-accent" aria-hidden="true" />
                   <div className="faq-contact-icon" aria-hidden="true">
-                    &#x1F4DE;
+                    <PhoneIcon />
                   </div>
                   <p className="faq-contact-text">
                     궁금한 점이 있으시면
                     <br />
                     편하게 연락주세요
                   </p>
+                  <div className="faq-contact-label">전화 문의</div>
                   <div className="faq-contact-phone">{PHONE_NUMBER}</div>
                   <div className="faq-contact-hours">평일 10:00 - 18:00</div>
+                  <div className="faq-contact-divider" />
                   <a
                     href={KAKAO_LINK}
                     target="_blank"
